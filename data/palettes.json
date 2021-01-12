@@ -1,0 +1,10 @@
+{
+  "palettes": {
+    "example": {
+      "path": {
+        "colours": ["#000000", "#FFFFFF"],
+        "stops": [0.00, 1.00]
+      }
+    }
+  }
+}
