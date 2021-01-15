@@ -2,67 +2,45 @@ package ak.gradients;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PVector;
 import processing.data.JSONArray;
 
-/**
- * This is a template class and can be used to start a new processing Library.
- * Make sure you rename this class as well as the name of the example package 'template' 
- * to your own Library naming convention.
- * 
- * (the tag example followed by the name of an example included in folder 'examples' will
- * automatically include the example in the javadoc.)
- *
- * @example Hello 
- */
-
 public class Gradient {
-	
-	// Reference to the parent sketch
 	PApplet parent;
-	
+
 	Palette palette;
-	
+
 	PImage image;
 
 	float weight = 1.0f;
-	
-	int gradientWidth, gradientHeight;
-	
-	public final static String VERSION = "##library.prettyVersion##";
-	
-	/**
-	 * @param theParent the parent PApplet
-	 */
+
+	int gradientX, gradientY, gradientWidth, gradientHeight;
+
 	public Gradient(PApplet theParent) {
 		parent = theParent;
 		palette = new Palette(parent);
-		welcome();
 	}
-	
-	private void welcome() {
-		System.out.println("##library.name## ##library.prettyVersion## by ##author##");
-	}
-	
+
 	public void setPalette(String paletteName) {
 		palette.setPalette(paletteName, "palettes.json");
 	}
-	
+
 	public void setPalette(String paletteName, String filename) {
 		palette.setPalette(paletteName, filename);
 	}
-	
+
 	public JSONArray getColours() {
 		return palette.getPaletteColours();
 	}
-	
+
 	public float getGradientProgress(int i) {
 		return 0.0f;
 	}
-	
+
 	public void setWeight(float _weight) {
 		this.weight = _weight;
 	}
-	
+
 	public int getPixelX(int i) {
 		return i % gradientWidth;
 	}
@@ -71,13 +49,30 @@ public class Gradient {
 		return PApplet.floor(i / gradientWidth);
 	}
 
-	/**
-	 * return the version of the Library.
-	 * 
-	 * @return String
-	 */
-	public static String version() {
-		return VERSION;
+	public void setPosition(int _x, int _y, int _width, int _height) {
+		this.gradientX = _x;
+		this.gradientY = _y;
+		this.gradientWidth = _width;
+		this.gradientHeight = _height;
+		this.image = parent.createImage(_width, _height, PApplet.RGB);
+	}
+
+	public void createLinear(PVector start, PVector end) {
+
+	}
+
+	public void updatePixels() {
+		for (int i = 0; i < image.pixels.length; i++) {
+			image.pixels[i] = getColour(i);
+		}
+	}
+
+	public void display() {
+		parent.image(this.image, gradientX, gradientY);
+	}
+
+	public int getColour(int i) {
+		float gradientProgress = getGradientProgress(i);
+		return this.palette.getColour(gradientProgress);
 	}
 }
-
