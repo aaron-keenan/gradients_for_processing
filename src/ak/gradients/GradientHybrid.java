@@ -3,14 +3,14 @@ package ak.gradients;
 import java.util.ArrayList;
 import processing.core.PApplet;
 
-public class GradientHybrid extends Gradient {
-	ArrayList<Gradient> gradients = new ArrayList<Gradient>();
+public class GradientHybrid extends GradientAbstract {
+	ArrayList<GradientAbstract> gradients = new ArrayList<GradientAbstract>();
 
 	public GradientHybrid(PApplet theParent) {
 		super(theParent);
 	}
 
-	public void addGradient(Gradient gradient, float weight) {
+	public void addGradient(GradientAbstract gradient, float weight) {
 		gradient.setWeight(weight);
 		gradients.add(gradient);
 	}
@@ -20,7 +20,7 @@ public class GradientHybrid extends Gradient {
 		if (gradients == null) {
 			return progress;
 		}
-		for (Gradient gradient : gradients) {
+		for (GradientAbstract gradient : gradients) {
 			progress += gradient.getGradientProgress(i) * gradient.weight;
 		}
 		return progress;

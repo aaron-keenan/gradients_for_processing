@@ -2,10 +2,9 @@ package ak.gradients;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.core.PVector;
 import processing.data.JSONArray;
 
-public class Gradient {
+public abstract class GradientAbstract {
 	PApplet parent;
 
 	Palette palette;
@@ -15,22 +14,10 @@ public class Gradient {
 	float weight = 1.0f;
 
 	int gradientX, gradientY, gradientWidth, gradientHeight;
-
-	public Gradient(PApplet theParent) {
+	
+	public GradientAbstract(PApplet theParent) {
 		parent = theParent;
 		palette = new Palette(parent);
-	}
-
-	public void setPalette(String paletteName) {
-		palette.setPalette(paletteName, "palettes.json");
-	}
-
-	public void setPalette(String paletteName, String filename) {
-		palette.setPalette(paletteName, filename);
-	}
-
-	public JSONArray getColours() {
-		return palette.getPaletteColours();
 	}
 
 	public float getGradientProgress(int i) {
@@ -56,11 +43,7 @@ public class Gradient {
 		this.gradientHeight = _height;
 		this.image = parent.createImage(_width, _height, PApplet.RGB);
 	}
-
-	public void createLinear(PVector start, PVector end) {
-
-	}
-
+	
 	public void updatePixels() {
 		for (int i = 0; i < image.pixels.length; i++) {
 			image.pixels[i] = getColour(i);
@@ -68,11 +51,24 @@ public class Gradient {
 	}
 
 	public void display() {
+		this.updatePixels();
 		parent.image(this.image, gradientX, gradientY);
+	}
+	
+	public void setPalette(String paletteName) {
+		palette.setPalette(paletteName, "palettes.json");
+	}
+
+	public void setPalette(String paletteName, String filename) {
+		palette.setPalette(paletteName, filename);
+	}
+
+	public JSONArray getColours() {
+		return palette.getPaletteColours();
 	}
 
 	public int getColour(int i) {
-		float gradientProgress = getGradientProgress(i);
+		float gradientProgress = this.getGradientProgress(i);
 		return this.palette.getColour(gradientProgress);
 	}
 }

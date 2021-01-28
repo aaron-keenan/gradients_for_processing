@@ -1,5 +1,9 @@
 package ak.gradients;
 
-public class GradientRadial {
+import processing.core.PApplet;
 
+public class GradientRadial extends GradientAbstract {
+	public GradientRadial(PApplet theParent) {
+		super(theParent);
+	}
 }
