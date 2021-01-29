@@ -2,6 +2,7 @@ package ak.gradients;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PVector;
 import processing.data.JSONArray;
 
 public abstract class GradientAbstract {
@@ -34,6 +35,10 @@ public abstract class GradientAbstract {
 
 	public int getPixelY(int i) {
 		return PApplet.floor(i / gradientWidth);
+	}
+	
+	public PVector getPixelVector(int i) {
+		return new PVector(this.getPixelX(i), this.getPixelY(i));
 	}
 
 	public void setPosition(int _x, int _y, int _width, int _height) {
