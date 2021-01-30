@@ -11,14 +11,20 @@ public class GradientLinear extends GradientAbstract {
 	}
 	
 	public void setStart(PVector theStart) {
-		start = theStart;
+		this.start = theStart;
 	}
 	
 	public void setEnd(PVector theEnd) {
-		end = theEnd;
+		this.end = theEnd;
 	}
 
 	public float getGradientProgress(int i) {
-		return PApplet.map(this.getPixelY(i), 0, this.gradientHeight, 0, 1);
+		PVector position = this.getPixelVector(i);
+		PVector fromStart = PVector.sub(position, start);
+		PVector gradientDirection = PVector.sub(end, start);
+		float gradientLength = gradientDirection.mag();
+		gradientDirection.normalize();
+		PVector progress = gradientDirection.mult(fromStart.dot(gradientDirection));
+		return PApplet.constrain(progress.mag() / gradientLength, 0, 1);
 	}
 }

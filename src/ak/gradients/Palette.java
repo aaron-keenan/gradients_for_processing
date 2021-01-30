@@ -48,8 +48,15 @@ public class Palette {
 				break;
 			}
 		}
-		float sectionProgress = PApplet.map(PApplet.constrain(progress, start[0], end[0]), start[0], end[0], 0, 1);
+		float sectionProgress = this.getSectionProgress(progress, start, end);
 		return this.smootherLerpColor(Math.round(start[1]), Math.round(end[1]), sectionProgress);
+	}
+	
+	private float getSectionProgress(float progress, float[] start, float[] end) {
+		if (start[0] == 1.0) {
+			return 1.0f;
+		}
+		return PApplet.map(PApplet.constrain(progress, start[0], end[0]), start[0], end[0], 0, 1);
 	}
 
 	private JSONObject getSelectedPalette(String paletteName) {

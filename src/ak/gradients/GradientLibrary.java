@@ -9,7 +9,7 @@ public class GradientLibrary {
 	}
 	
 	private void welcome() {
-		System.out.println("##library.name## ##library.prettyVersion## by ##author##");
+		System.out.println("##library.name## " + VERSION + " by ##author##");
 	}
 
 	/**
