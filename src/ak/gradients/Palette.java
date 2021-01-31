@@ -33,6 +33,9 @@ public class Palette {
 	public float[][] getColours() {
 		JSONArray jsonColours = this.getPaletteColours();
 		JSONArray jsonStops = selectedPalette.getJSONArray("stops");
+		if (jsonStops == null) {
+			jsonStops = getEqualStops(jsonColours.size());
+		}
 		float[][] colours = new float[jsonColours.size()][2];
 		for (int i = 0; i < jsonColours.size(); i++) {
 			colours[i] = new float[] { jsonStops.getFloat(i), this.convertHexColour(jsonColours.getString(i)) };
@@ -105,6 +108,16 @@ public class Palette {
 		float brightness = PApplet.lerp(parent.brightness(a), parent.brightness(b), progress);
 
 		return parent.color(hue, saturation, brightness);
+	}
+	
+	private JSONArray getEqualStops(int total)
+	{
+		JSONArray stops = new JSONArray();
+		for (int i = 0; i < total; i++) {
+			float stop = 1.0f * i / (total - 1);
+			stops.setFloat(i, stop);
+		}
+		return stops;
 	}
 	
 	private JSONObject setDefault()
