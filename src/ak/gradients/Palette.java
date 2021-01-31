@@ -22,6 +22,12 @@ public class Palette {
 	public void setPalette(String paletteName, String filename) {
 		palettes = parent.loadJSONObject(filename).getJSONObject("palettes");
 		selectedPalette = this.getSelectedPalette(paletteName);
+		if (selectedPalette == null) {
+			System.out.println("No palette colours found at " + paletteName);
+			System.out.println("Setting default colours");
+			selectedPalette = this.setDefault();
+		}
+		System.out.println(selectedPalette);
 	}
 
 	public float[][] getColours() {
@@ -99,5 +105,19 @@ public class Palette {
 		float brightness = PApplet.lerp(parent.brightness(a), parent.brightness(b), progress);
 
 		return parent.color(hue, saturation, brightness);
+	}
+	
+	private JSONObject setDefault()
+	{
+		JSONArray defaultColours = new JSONArray();
+		defaultColours.setString(0, "#000000");
+		defaultColours.setString(1, "#FFFFFF");
+		JSONArray defaultStops = new JSONArray();
+		defaultStops.setFloat(0, 0.0f);
+		defaultStops.setFloat(1, 1.0f);
+		JSONObject json = new JSONObject();
+		json.setJSONArray("colours", defaultColours);
+		json.setJSONArray("stops", defaultStops);
+		return json;
 	}
 }

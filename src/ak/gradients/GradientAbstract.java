@@ -25,8 +25,8 @@ public abstract class GradientAbstract {
 		return 0.0f;
 	}
 
-	public void setWeight(float _weight) {
-		this.weight = _weight;
+	public void setWeight(float theWeight) {
+		this.weight = theWeight;
 	}
 
 	public int getPixelX(int i) {
