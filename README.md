@@ -70,4 +70,5 @@ gradientHybrid = new GradientHybrid(this);
 gradientHybrid.setPalette("example.path");
 gradientHybrid.addGradient(gradientNoise, 0.25);
 gradientHybrid.addGradient(gradientRadial, 0.75);
+gradientHybrid.display();
 ```
